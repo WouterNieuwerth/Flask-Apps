@@ -22,7 +22,7 @@ def temp():
             'tmp_press': sense.get_temperature_from_pressure(),
             'humidity': sense.get_humidity()
             }
-    return output
+    return str(output)
 
 if __name__ == '__main__':
     app.run(debug=True)
