@@ -18,19 +18,18 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'paper motion'
 socketio = SocketIO(app)
 
-output = {
-    'pressure': sense.get_pressure(),
-    'temp_hum': sense.get_temperature_from_humidity(),
-    'tmp_press': sense.get_temperature_from_pressure(),
-    'humidity': sense.get_humidity()
-}
-
 @app.route('/')
 def home():
     return 'test homepage /'
 
 @app.route('/api/temp')
 def temp():
+    output = {
+        'pressure': sense.get_pressure(),
+        'temp_hum': sense.get_temperature_from_humidity(),
+        'tmp_press': sense.get_temperature_from_pressure(),
+        'humidity': sense.get_humidity()
+    }
     return str(output)
 
 def messageReceived(methods=['GET', 'POST']):
@@ -43,6 +42,12 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 def timer():
     threading.Timer(5.0, timer).start()
+    output = {
+        'pressure': sense.get_pressure(),
+        'temp_hum': sense.get_temperature_from_humidity(),
+        'tmp_press': sense.get_temperature_from_pressure(),
+        'humidity': sense.get_humidity()
+    }
     socketio.emit('senseHat', {'data': output})
     #print('ticker')
 
