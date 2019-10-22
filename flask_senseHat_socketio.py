@@ -31,7 +31,7 @@ def home():
 
 @app.route('/api/temp')
 def temp():
-    return 'test 123'
+    return str(output)
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
@@ -50,4 +50,4 @@ timer()
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0')
