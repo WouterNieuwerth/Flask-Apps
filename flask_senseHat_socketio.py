@@ -6,20 +6,17 @@ Created on Tue Oct 22 19:30:12 2019
 @author: wouternieuwerth
 """
 
-import eventlet
-import socketio
-from sense_hat import SenseHat
+from flask import Flask
+from flask_socketio import SocketIO
 import time
-
+from sense_hat import SenseHat
 sense = SenseHat()
 
 sense.set_rotation(180)
 
-# create a Socket.IO server
-sio = socketio.Server()
-
-# wrap with a WSGI application
-app = socketio.WSGIApp(sio)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'paper motion'
+socketio = SocketIO(app)
 
 output = {
     'pressure': sense.get_pressure(),
@@ -28,24 +25,26 @@ output = {
     'humidity': sense.get_humidity()
 }
 
-def emitOutput():
-    sio.emit('senseData', {'data' : output})
+@app.route('/')
+def home():
+    return 'test homepage /'
+
+@app.route('/api/temp')
+def temp():
+    print('message was received!')
+    return 'test 123'
+
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+    
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
     
 while True:
-    emitOutput()
+    socketio.emit('senseHat', {'data': output})
     time.sleep(1)
 
-@sio.event
-def connect(sid, environ):
-    print('connect ', sid)
-
-@sio.event
-def my_message(sid, data):
-    print('message ', data)
-
-@sio.event
-def disconnect(sid):
-    print('disconnect ', sid)
-
 if __name__ == '__main__':
-    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+    socketio.run(app, debug=True)
