@@ -15,13 +15,13 @@ sense = SenseHat()
 
 sense.set_rotation(180)
 
-flapp = Flask(__name__)
+app = Flask(__name__)
 
 # create a Socket.IO server
 sio = socketio.Server()
 
 # wrap with a WSGI application
-app = socketio.WSGIApp(sio, flapp)
+app = socketio.WSGIApp(sio, app)
 
 output = {
     'pressure': sense.get_pressure(),
