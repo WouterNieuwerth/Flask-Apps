@@ -8,7 +8,7 @@ Created on Tue Oct 22 19:30:12 2019
 
 from flask import Flask
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 import threading
 from sense_hat import SenseHat
 sense = SenseHat()
@@ -50,7 +50,7 @@ def timer():
         'tmp_press': sense.get_temperature_from_pressure(),
         'humidity': sense.get_humidity()
     }
-    emit('senseHat', {'data': output})
+    socketio.emit('senseHat', {'data': output})
     #print('ticker')
 
 timer()
