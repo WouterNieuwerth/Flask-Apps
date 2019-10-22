@@ -7,7 +7,7 @@ Created on Tue Oct 22 19:30:12 2019
 """
 
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_socketio import SocketIO
 import threading
 from sense_hat import SenseHat
@@ -18,15 +18,13 @@ sense.set_rotation(180)
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'paper motion'
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
-@cross_origin()
 def home():
     return 'test homepage /'
 
 @app.route('/api/temp')
-@cross_origin()
 def temp():
     output = {
         'pressure': sense.get_pressure(),
