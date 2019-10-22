@@ -21,10 +21,12 @@ app.config['SECRET_KEY'] = 'paper motion'
 socketio = SocketIO(app)
 
 @app.route('/')
+@cross_origin()
 def home():
     return 'test homepage /'
 
 @app.route('/api/temp')
+@cross_origin()
 def temp():
     output = {
         'pressure': sense.get_pressure(),
