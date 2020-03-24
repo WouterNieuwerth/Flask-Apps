@@ -49,11 +49,11 @@ def job():
 
 def set_sense_hat(df):
     count = len(df.index)
-    rank = df['rank_temp_press'].loc[df['timestamp'] == df['timestamp'].max()].values[0]
+    rank = int(df['rank_temp_press'].loc[df['timestamp'] == df['timestamp'].max()].values[0])
 
-    r = int(round(((rank-1)/(count-1)) * 255)) # Red
+    r = int(round(((rank-1)/max((count-1),1)) * 255)) # Red
     g = 0
-    b = int(round((1-((rank-1)/(count-1))) * 255)) # Blue
+    b = int(round((1-((rank-1)/max((count-1),1))) * 255)) # Blue
 
     sense.clear()
     sense.clear(r,g,b)
