@@ -1,7 +1,6 @@
 import schedule
 import time
 import pandas as pd
-import pandas_gbq
 import requests
 import json
 from datetime import datetime, timedelta
