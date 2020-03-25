@@ -24,7 +24,7 @@ def temp():
             }
     return str(output)
 
-@app.route('/api/led/set_color/<int:r>/<ing:g>/<int:b>')
+@app.route('/api/led/set_color/<int:r>/<int:g>/<int:b>')
 def set_color(r,g,b):
     sense.clear()
     sense.clear(r,g,b)
