@@ -31,7 +31,7 @@ def led_set_color(r,g,b):
     return 'LED Color set'
 
 @app.route('/api/led/off')
-def led_off(r,g,b):
+def led_off():
     sense.clear()
     return 'LED off'
 
