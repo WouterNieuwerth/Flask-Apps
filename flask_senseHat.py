@@ -25,13 +25,13 @@ def temp():
     return str(output)
 
 @app.route('/api/led/set_color/<int:r>/<int:g>/<int:b>')
-def set_color(r,g,b):
+def led_set_color(r,g,b):
     sense.clear()
     sense.clear(r,g,b)
     return 'LED Color set'
 
 @app.route('/api/led/off')
-def set_color(r,g,b):
+def led_off(r,g,b):
     sense.clear()
     return 'LED off'
 
