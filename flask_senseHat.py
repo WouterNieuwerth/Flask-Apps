@@ -24,6 +24,17 @@ def temp():
             }
     return str(output)
 
+@app.route('/api/led/set_color/<int:r>/<ing:g>/<int:b>')
+def set_color(r,g,b):
+    sense.clear()
+    sense.clear(r,g,b)
+    return 'LED Color set'
+
+@app.route('/api/led/off')
+def set_color(r,g,b):
+    sense.clear()
+    return 'LED off'
+
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(host='0.0.0.0')
